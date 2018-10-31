@@ -1,0 +1,64 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact'}"/>
+    <aura:attribute name="opptyColumns" type="List" />
+    <aura:attribute name="caseColumns" type="List" />
+    <aura:attribute name="contactColumns" type="List" /> 
+    <aura:attribute name="customActions" type="List" />
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>    
+	<aura:handler event="aura:locationChange" action="{!c.refreshView}"/>    
+    
+    <lightning:card title="">
+        <p class="slds-p-horizontal_small">    
+            <lightning:layout >
+                <lightning:layoutItem >             
+                    Account
+                    <force:inputField value="{!v.contact.AccountId}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </p>
+    </lightning:card>
+    <aura:if isTrue="{!v.contact.AccountId != ''}">
+        <lightning:card title="">
+            <p class="slds-p-horizontal_small"> 
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem padding="around-small" size="12">                        
+                        <c:singleRelatedList recordId="{!v.contact.AccountId}" 
+                                             sobjectApiName="Opportunity"
+                                             relatedFieldApiName="AccountId"
+                                             sortedBy="Name"
+                                             fields="Name, StageName, CloseDate, Amount"
+                                             columns="{!v.opptyColumns}"
+                                             />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem padding="around-small" size="12">
+                        <c:singleRelatedList recordId="{!v.contact.AccountId}" 
+                                             sobjectApiName="Case"
+                                             relatedFieldApiName="AccountId"
+                                             sortedBy="CaseNumber"
+                                             sortedDirection="DESC"
+                                             fields="CaseNumber, Contact.Name, Priority, Subject"
+                                             columns="{!v.caseColumns}"
+                                             />
+                    </lightning:layoutItem>       
+                    <lightning:layoutItem padding="around-small" size="12">
+                        <c:singleRelatedList recordId="{!v.contact.AccountId}" 
+                                             sobjectApiName="Contact"
+                                             relatedFieldApiName="AccountId"
+                                             sortedBy="Name"
+                                             fields="Name, Title, Email, Phone"
+                                             columns="{!v.contactColumns}"
+                                             customActions="{!v.customActions}"       
+                                             onRowActionHandler="{!c.customHandler}"                                             
+                                             />
+                    </lightning:layoutItem>                    
+                </lightning:layout>
+                
+                
+            </p>
+            
+        </lightning:card>
+    </aura:if>
+    
+</aura:component>

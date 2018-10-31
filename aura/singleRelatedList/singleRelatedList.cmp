@@ -1,0 +1,52 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="SingleRelatedListController">
+    <aura:attribute name="sobjectApiName" type="String" required="true" />    
+    <aura:attribute name="relatedFieldApiName" type="String" required="true"/>    
+    <aura:attribute name="numberOfRecords" type="Integer" default="6"/>    
+    <aura:attribute name="sortedBy" type="String" required="true"/>
+    <aura:attribute name="sortedDirection" type="String" default="ASC"/>    
+    <aura:attribute name="onRowActionHandler" type="Aura.Action"/>    
+    <aura:attribute name="customActions" type="List"/>    
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="columnsWithActions" type="List" access="private"/>
+    <aura:attribute name="fields" type="String" required="true"/>
+    <aura:attribute name="records" type="Object" access="private"/>
+    <aura:attribute name="parentRelationshipApiName" type="String" access="private"/>    
+    <aura:attribute name="sobjectLabel" type="String" access="private"/>    
+    <aura:attribute name="sobjectLabelPlural" type="String" access="private"/>    
+    <aura:attribute name="numberOfRecordsForTitle" type="String" access="private"/>    
+    <aura:attribute name="iconName" type="String" access="private"/>    
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="change" value="{!v.columns}" action="{! c.handleColumnsChange }"/>
+	<aura:handler event="force:showToast" action="{!c.handleToastEvent}"/>  
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    
+    <div class="c-container">
+        <lightning:card class="slds-card_boundary" iconName="{!v.iconName}">
+            <aura:set attribute="actions">
+                <lightning:button label="New" onclick="{!c.handleCreateRecord}"/>
+            </aura:set>     
+            <aura:set attribute="title">
+                <b><a class="slds-card__header-link" onclick="{!c.handleGotoRelatedList}">{!(v.sobjectLabelPlural) + ' (' + (v.numberOfRecordsForTitle) + ')'}</a></b>
+            </aura:set>             
+            <aura:set attribute="footer">
+                <aura:if isTrue="{!not(empty(v.records))}">  
+                	<a onclick="{!c.handleGotoRelatedList}">View All</a>
+                </aura:if>
+            </aura:set>                
+            <aura:if isTrue="{!not(empty(v.records))}">    
+                <p class="slds-p-horizontal_small">                  
+                    <lightning:datatable class="related-list"
+                                         columns="{! v.columnsWithActions }"
+                                         data="{! v.records }"
+                                         keyField="id"
+                                         onrowaction="{! c.handleRowAction }"
+                                         hideCheckboxColumn="true"
+                                         resizeColumnDisabled="true"/>                     
+                </p>               
+			</aura:if>
+            
+        </lightning:card>
+    </div>
+
+</aura:component>
