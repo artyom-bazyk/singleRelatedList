@@ -49,6 +49,7 @@ public with sharing class SingleRelatedListController {
         String name;
         for (Schema.ChildRelationship cr: descrRes.getChildRelationships()){ 
             if(cr.getChildSObject().getDescribe().getName() == parentSobjectName){
+		    	// This may not be accurate if the same object has more than 1 child relantionships to the same child object.
           	 	name = cr.getRelationshipName();
                 break;
             }
