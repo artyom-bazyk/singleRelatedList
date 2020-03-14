@@ -1,7 +1,7 @@
 # Single Related List
 Lightning component for displaying a list of Salesforce records that are related to a parent record with a lookup or master-detail relationship.
 
-# Check out the [LWC Related List](https://github.com/artyom-bazyk/relatedList)
+# Check out new [LWC Related List](https://github.com/artyom-bazyk/relatedList)
 
 [Install the package](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t6F000003zHCdQAM)
 
