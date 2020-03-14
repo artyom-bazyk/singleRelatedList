@@ -26,9 +26,5 @@
     },
     customHandler : function(cmp, event, helper) {
         alert("It's custom action!")
-    },
-    
-    refreshView : function (component, event, helper) {
-         $A.get('e.force:refreshView').fire();
-    }    
+    } 
 })

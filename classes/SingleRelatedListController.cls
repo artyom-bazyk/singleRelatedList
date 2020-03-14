@@ -21,7 +21,8 @@ public with sharing class SingleRelatedListController {
         String sobjectApiName = (String)requestMap.get(SOBJECT_API_NAME_PARAM);
         responseMap.put(ICON_NAME_PARAM, getIconName(sobjectApiName));
         String recordId = (String)requestMap.get(RECORD_ID_PARAM);
-        responseMap.put(PARENT_RELATIONSHIP_API_NAME_PARAM, getParentRelationshipName(recordId, sobjectApiName));
+        String relatedFieldApiName = (String)requestMap.get(RELATED_FIELD_API_NAME_PARAM);
+        responseMap.put(PARENT_RELATIONSHIP_API_NAME_PARAM, getParentRelationshipName(recordId, sobjectApiName, relatedFieldApiName));
         
         Schema.SObjectType sobjectType = Schema.getGlobalDescribe().get(sobjectApiName);
         Schema.DescribeSObjectResult sobjectDescribe = sobjectType.getDescribe();
@@ -44,11 +45,12 @@ public with sharing class SingleRelatedListController {
         return Database.query(String.escapeSingleQuotes(query));
 	}
         
-    private static String getParentRelationshipName(Id recordId, String parentSobjectName){
+    private static String getParentRelationshipName(Id recordId, String childSobjectApiName, String relatedFieldApiName){
         Schema.DescribeSObjectResult descrRes = recordId.getSObjectType().getDescribe();
         String name;
         for (Schema.ChildRelationship cr: descrRes.getChildRelationships()){ 
-            if(cr.getChildSObject().getDescribe().getName() == parentSobjectName){
+            if(cr.getChildSObject().getDescribe().getName() == childSobjectApiName
+            && cr.getField().getDescribe().getName() == relatedFieldApiName){
           	 	name = cr.getRelationshipName();
                 break;
             }

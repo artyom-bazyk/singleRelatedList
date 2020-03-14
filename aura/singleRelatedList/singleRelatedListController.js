@@ -42,7 +42,8 @@
             "entityApiName": cmp.get("v.sobjectApiName"),
             "defaultFieldValues": {
                 [cmp.get("v.relatedFieldApiName")] : cmp.get("v.recordId")
-            }
+            },
+            "navigationLocation": "RELATED_LIST"
         });
         createRecordEvent.fire();
 	},   

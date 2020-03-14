@@ -5,8 +5,7 @@
     <aura:attribute name="contactColumns" type="List" /> 
     <aura:attribute name="customActions" type="List" />
     
-    <aura:handler name="init" value="{! this }" action="{! c.init }"/>    
-	<aura:handler event="aura:locationChange" action="{!c.refreshView}"/>    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>   
     
     <lightning:card title="">
         <p class="slds-p-horizontal_small">    
