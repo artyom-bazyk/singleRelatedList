@@ -3,7 +3,7 @@ Lightning component for displaying a list of Salesforce records that are related
 
 # Check out new [LWC Related List](https://github.com/artyom-bazyk/relatedList)
 
-[Install the package](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t6F000003zHCdQAM)
+[Install the package](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t6F000003zHCiQAM)
 
 The component configuration fields are:
 - **recordId** - Id of parent record (Required)
